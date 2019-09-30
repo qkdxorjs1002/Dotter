@@ -4,11 +4,11 @@ using System.Runtime.InteropServices;
 
 namespace Dotter
 {
-    class GlobalHook
+    static class GlobalHook
     {
         public static event EventHandler GlobalAction = delegate { };
 
-        public GlobalHook()
+        static GlobalHook()
         {
             _hookID = SetHook(_proc);
         }

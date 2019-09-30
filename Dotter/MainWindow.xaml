@@ -10,7 +10,7 @@
     <Grid>
         <tb:TaskbarIcon x:Name="tbi" ToolTipText="Dotter" IconSource="Icon/icon.ico" TrayLeftMouseUp="tbi_TrayLeftMouseUp"/>
         <TextBlock x:Name="DebugTb" Visibility="Collapsed" TextAlignment="Center" Foreground="Red"/>
-        <Grid HorizontalAlignment="Left" VerticalAlignment="Top" Height="25" Background="#FD37474F" Opacity="0.65">
+        <Grid HorizontalAlignment="Center" VerticalAlignment="Top" Height="25" Background="#FF00B0FF" Opacity="0.9" Margin="0">
             <TextBlock x:Name="Clock" VerticalAlignment="Center" Text="Time" Foreground="White" FontSize="14" Margin="5,0"/>
         </Grid>
         <Grid x:Name="DotGrid">
@@ -130,7 +130,7 @@
             </Grid>
         </Grid>
         <Grid x:Name="SettingPanel" Background="#BFFFFFFF" Width="400" Height="500" HorizontalAlignment="Center" VerticalAlignment="Top" Visibility="Collapsed">
-            <TextBlock Text="Build 353" Foreground="#FF4B4B4B" Margin="5" Padding="10,0" FontSize="9"/>
+            <TextBlock Text="Build 355" Foreground="#FF4B4B4B" Margin="5" Padding="10,0" FontSize="9"/>
             <StackPanel>
                 <StackPanel Margin="5" Orientation="Horizontal" FlowDirection="RightToLeft">
                     <TextBlock x:Name="ExitButton" Text="&#xE106;" Foreground="Black" FontFamily="/Dotter;component/Font/#Segoe MDL2 Assets" Padding="10,0" FontWeight="Bold" MouseEnter="TextBlock_MouseEnter" MouseLeave="TextBlock_MouseLeave" MouseLeftButtonUp="ExitButton_MouseLeftButtonUp"/>
@@ -189,17 +189,13 @@
                     </StackPanel>
                 </StackPanel>
                 <StackPanel Margin="15,5">
-                    <Label Content="Map Source (Image Url) [Enter to Apply]" FontWeight="Bold" />
-                    <TextBox x:Name="MapImgTb" KeyDown="Tb_KeyDown"/>
-                </StackPanel>
-                <StackPanel Margin="15,5">
                     <Label Content="Server Address [Enter to Apply]" FontWeight="Bold" />
                     <TextBox x:Name="ServerAddrTb" KeyDown="Tb_KeyDown"/>
                     <TextBlock Text="Example: 123.12.1.255:23232" Foreground="#FF4B4B4B" FontSize="8"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
-        <Grid x:Name="DocViewer" Width="250" Height="200" Background="#FF37474F" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,0,0,0" Opacity="0.65" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Visibility="Collapsed">
+        <Grid x:Name="DocViewer" Width="250" Height="200" Background="#FFFF1744" HorizontalAlignment="Left" Opacity="0.9" VerticalAlignment="Center" Margin="50,0,0,0" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Visibility="Collapsed">
             <Grid.RowDefinitions>
                 <RowDefinition Height="25" />
                 <RowDefinition Height="1*" />
@@ -218,7 +214,7 @@
                 </Grid>
             </ScrollViewer>
         </Grid>
-        <Grid x:Name="LogViewer" Width="350" Height="200" Background="#FF37474F" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,50,0,0" Opacity="0.65" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Visibility="Collapsed">
+        <Grid x:Name="LogViewer" Width="350" Height="200" Background="#FF00B0FF" Opacity="0.9" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="50,50,0,0" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" Visibility="Collapsed">
             <ScrollViewer x:Name="LogViewerScroll" Margin="5">
                 <ScrollViewer.Resources>
                     <Style TargetType="{x:Type ScrollBar}">
@@ -235,20 +231,16 @@
         </Grid>
         <Grid HorizontalAlignment="Left" VerticalAlignment="Center">
             <StackPanel>
-                <Grid x:Name="SidePlayer" Width="50" Height="25" Opacity="0.65" Background="#FFFF1744" ToolTip="Click here to refresh list" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonUp="SidePlayer_MouseLeftButtonUp">
+                <Grid x:Name="SidePlayer" Width="50" Height="25" Opacity="0.9" Background="#FFFF1744" ToolTip="Click here to refresh list" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave" MouseLeftButtonUp="SidePlayer_MouseLeftButtonUp">
                     <TextBlock x:Name="SidePlayerTb" Foreground="White" VerticalAlignment="Center" TextAlignment="Center" Text="Off-L"/>
                 </Grid>
                 <Separator Background="{x:Null}" Margin="0"/>
-                <Grid x:Name="SideLog" Width="50" Height="40" Opacity="0.65" Background="#FF37474F" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
+                <Grid x:Name="SideLog" Width="50" Height="40" Opacity="0.9" Background="#FF00B0FF" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
                     <TextBlock Text="Log" Foreground="White" VerticalAlignment="Center" TextAlignment="Center"/>
-                </Grid>
-                <Separator Background="{x:Null}" Margin="0"/>
-                <Grid x:Name="SideMap" Width="50" Height="40" Opacity="0.65" Background="#FF37474F" MouseEnter="Grid_MouseEnter" MouseLeave="Grid_MouseLeave">
-                    <TextBlock Text="Map" Foreground="White" VerticalAlignment="Center" TextAlignment="Center"/>
                 </Grid>
             </StackPanel>
         </Grid>
-        <Grid x:Name="NotifyGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,100,0,0" Width="270" Background="#FF37474F" Opacity="0">
+        <Grid x:Name="NotifyGrid" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,100,0,0" Width="270" Background="#FF00B0FF" Opacity="0">
             <Grid.Resources>
                 <Storyboard x:Key="PopAnimation">
                     <DoubleAnimation
@@ -277,6 +269,5 @@
             </Grid.Resources>
             <TextBlock x:Name="NotifyName" Foreground="White" FontSize="14" Padding="10" Text="Notification" TextTrimming="CharacterEllipsis"/>
         </Grid>
-        <Image x:Name="MapImg" Visibility="Collapsed" Source="Icon/icon.ico"/>
     </Grid>
 </Window>

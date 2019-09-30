@@ -18,6 +18,7 @@ using System.Windows.Threading;
 using System.Threading;
 using System.Net.Sockets;
 using System.Net;
+using System.Runtime.InteropServices;
 
 namespace Dotter
 {
@@ -29,10 +30,15 @@ namespace Dotter
         DispatcherTimer refreshTimer = new DispatcherTimer();
         DispatcherTimer clockTimer = new DispatcherTimer();
 
-        GlobalHook GlobalHooker = new GlobalHook();
-
         Thread ProcessDataThread;
 
+        /**
+        [DllImport("User32.dll")]
+        public static extern IntPtr GetDC(IntPtr hwnd);
+        [DllImport("User32.dll")]
+        public static extern void ReleaseDC(IntPtr hwnd, IntPtr dc);
+        **/
+        
         public MainWindow()
         {
             InitializeComponent();
@@ -40,21 +46,23 @@ namespace Dotter
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
+            /**
+            IntPtr desktopPtr = GetDC(IntPtr.Zero);
+            System.Drawing.Graphics g = System.Drawing.Graphics.FromHdc(desktopPtr);
+
+            System.Drawing.SolidBrush b = new System.Drawing.SolidBrush(System.Drawing.Color.White);
+            g.FillRectangle(b, new System.Drawing.Rectangle(1280, 720, 50, 50));
+
+            g.Dispose();
+            ReleaseDC(IntPtr.Zero, desktopPtr);
+            **/
+
             GlobalHook.GlobalAction += GlobalHook_GlobalAction;
             
             MainFunction.serverLog += "Dotter Initialization\n";
             MainFunction.serverLogTime += DateTime.Now.ToLongTimeString() + '\n';
 
             MainFunction.LoadSettings();
-
-            try
-            {
-                MapImg.Source = new BitmapImage(new Uri(MapImgTb.Text));
-            }
-            catch (Exception)
-            {
-                DebugTb.Text += "MapImg.Source : Exception occured\n";
-            }
 
             ProcessDataThread = new Thread(new ParameterizedThreadStart(MainFunction.ThreadlizedProcessData));
             ProcessDataThread.Start(ServerAddrTb.Text);
@@ -213,7 +221,7 @@ namespace Dotter
         {
             Grid targetObj = sender as Grid;
 
-            targetObj.Opacity = 0.9F;
+            targetObj.Opacity = 1;
 
             switch (targetObj.Name)
             {
@@ -225,10 +233,6 @@ namespace Dotter
                 case "LogViewer":
                 case "SideLog":
                     LogViewer.Visibility = Visibility.Visible;
-                    break;
-
-                case "SideMap":
-                    MapImg.Visibility = Visibility.Visible;
                     break;
             }
         }
@@ -299,17 +303,6 @@ namespace Dotter
             {
                 switch (targetObj.Name)
                 {
-                    case "MapImgTb":
-                        try
-                        {
-                            MapImg.Source = new BitmapImage(new Uri(MapImgTb.Text));
-                        }
-                        catch (Exception)
-                        {
-                            DebugTb.Text += "MapImg.Source : Exception occured\n";
-                        }
-                        break;
-
                     case "ServerAddrTb":
                         if (ProcessDataThread.ThreadState != System.Threading.ThreadState.Running)
                         {
@@ -336,7 +329,7 @@ namespace Dotter
         {
             Grid targetObj = sender as Grid;
 
-            targetObj.Opacity = 0.65F;
+            targetObj.Opacity = 0.9;
 
             switch (targetObj.Name)
             {
@@ -351,10 +344,6 @@ namespace Dotter
                 case "LogViewer":
                 case "SideLog":
                     LogViewer.Visibility = Visibility.Collapsed;
-                    break;
-
-                case "SideMap":
-                    MapImg.Visibility = Visibility.Collapsed;
                     break;
             }
         }
@@ -582,7 +571,6 @@ namespace Dotter
             mainWindow.ColorTb.Text = Properties.Settings.Default._DOTCOLOR;
             mainWindow.SizeTb.Text = Properties.Settings.Default._DOTSIZE;
             mainWindow.StrokeTb.Text = Properties.Settings.Default._DOTSTROKE;
-            mainWindow.MapImgTb.Text = Properties.Settings.Default._MAPIMGURL;
             mainWindow.ServerAddrTb.Text = Properties.Settings.Default._SERVERID;
             mainWindow.EllipseCb.IsChecked = Properties.Settings.Default._DOTELLIPSE;
             mainWindow.CrossCb.IsChecked = Properties.Settings.Default._DOTCROSS;
@@ -604,7 +592,6 @@ namespace Dotter
             Properties.Settings.Default._DOTCOLOR = mainWindow.ColorTb.Text;
             Properties.Settings.Default._DOTSIZE = mainWindow.SizeTb.Text;
             Properties.Settings.Default._DOTSTROKE = mainWindow.StrokeTb.Text;
-            Properties.Settings.Default._MAPIMGURL = mainWindow.MapImgTb.Text;
             Properties.Settings.Default._SERVERID = mainWindow.ServerAddrTb.Text;
             Properties.Settings.Default._DOTELLIPSE = Convert.ToBoolean(mainWindow.EllipseCb.IsChecked);
             Properties.Settings.Default._DOTCROSS = Convert.ToBoolean(mainWindow.CrossCb.IsChecked);
